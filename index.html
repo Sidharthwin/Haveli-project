@@ -483,13 +483,14 @@
 
     /* CINEMATIC NARRATOR TYPEWRITER */
     .nline {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 2.4vw, 1.3rem);
-      color: #e8d5b0;
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+      color: #c9a84c;
       text-align: center;
-      max-width: 660px;
-      line-height: 1.9;
-      letter-spacing: 0.3px;
+      max-width: 700px;
+      line-height: 2;
+      letter-spacing: 0.5px;
       min-height: 2rem;
       padding: 0 24px;
     }
@@ -497,19 +498,21 @@
     .nline.gold {
       color: #c9a84c;
       font-style: italic;
+      text-shadow: 0 0 40px rgba(201, 168, 76, 0.55);
     }
 
     .nline.big {
-      font-size: clamp(1.4rem, 3.8vw, 2rem);
-      font-weight: 700;
+      font-size: clamp(1.5rem, 3.8vw, 2.1rem);
+      font-style: italic;
       color: #c9a84c;
-      text-shadow: 0 0 50px rgba(201, 168, 76, 0.6);
+      text-shadow: 0 0 60px rgba(201, 168, 76, 0.7), 0 0 120px rgba(201, 168, 76, 0.25);
     }
 
     .nline.hindi {
       font-family: 'Noto Serif Devanagari', serif;
+      font-style: normal;
       font-size: clamp(0.85rem, 1.8vw, 1rem);
-      color: rgba(201, 168, 76, 0.55);
+      color: rgba(201, 168, 76, 0.65);
       letter-spacing: 4px;
     }
 
@@ -557,6 +560,34 @@
       pointer-events: none;
       transition: opacity 1.8s ease;
       background: #000;
+      overflow: hidden;
+    }
+
+    #itc-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #itc-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 65% 55% at 50% 45%,
+          rgba(120, 55, 0, 0.28) 0%, rgba(201, 168, 76, 0.06) 45%, transparent 72%);
+      pointer-events: none;
+      z-index: 1;
+      animation: itcGlowPulse 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes itcGlowPulse {
+      0% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 1;
+      }
     }
 
     #intro-title-card.vis {
@@ -564,82 +595,145 @@
       pointer-events: all;
     }
 
+    #itc-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* Top ornament row */
+    .itc-ornament {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .itc-ornament-line {
+      width: 70px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.5));
+    }
+
+    .itc-ornament-line.rev {
+      background: linear-gradient(to left, transparent, rgba(201, 168, 76, 0.5));
+    }
+
+    .itc-ornament-gem {
+      font-size: 0.9rem;
+      color: rgba(201, 168, 76, 0.6);
+    }
+
     #itc-title {
       font-family: 'Playfair Display', serif;
-      font-size: 3.8rem;
+      font-size: clamp(3rem, 7vw, 5rem);
       color: #c9a84c;
-      letter-spacing: 14px;
-      margin-bottom: 8px;
-      text-shadow: 0 0 60px rgba(201, 168, 76, 0.7);
+      letter-spacing: 18px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 80px rgba(201, 168, 76, 0.9), 0 0 160px rgba(201, 168, 76, 0.3);
       animation: tBreathe 3s ease-in-out infinite;
+      font-weight: 700;
     }
 
     @keyframes tBreathe {
 
       0%,
       100% {
-        text-shadow: 0 0 60px rgba(201, 168, 76, 0.6)
+        text-shadow: 0 0 60px rgba(201, 168, 76, 0.7), 0 0 120px rgba(201, 168, 76, 0.2);
       }
 
       50% {
-        text-shadow: 0 0 100px rgba(201, 168, 76, 1), 0 0 200px rgba(201, 168, 76, 0.3)
+        text-shadow: 0 0 130px rgba(201, 168, 76, 1), 0 0 260px rgba(201, 168, 76, 0.45), 0 0 400px rgba(201, 168, 76, 0.1);
       }
     }
 
     #itc-sub {
-      font-size: 0.62rem;
+      font-family: 'IM Fell English', serif;
+      font-size: 0.65rem;
       letter-spacing: 7px;
-      color: rgba(201, 168, 76, 0.35);
+      color: rgba(201, 168, 76, 0.45);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      font-style: italic;
+      margin-bottom: 6px;
     }
 
     #itc-hindi {
       font-family: 'Noto Serif Devanagari', serif;
-      font-size: 0.85rem;
-      color: rgba(201, 168, 76, 0.22);
+      font-size: 0.82rem;
+      color: rgba(201, 168, 76, 0.3);
       letter-spacing: 4px;
-      margin-bottom: 50px;
+      margin-bottom: 36px;
+    }
+
+    /* Divider + mission */
+    .itc-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      width: 100%;
+      max-width: 540px;
+    }
+
+    .itc-divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.35), transparent);
+    }
+
+    .itc-divider-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.55rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, 0.5);
     }
 
     #mission-box {
-      background: rgba(5, 2, 0, 0);
-      border: 0px solid rgba(201, 168, 76, 0);
-      max-width: 520px;
+      background: rgba(8, 4, 0, 0.82);
+      border: 1px solid rgba(201, 168, 76, 0.22);
+      border-top: 1px solid rgba(201, 168, 76, 0.45);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.45);
+      max-width: 540px;
       width: 90%;
-      padding: 22px 30px;
-      text-align: center;
+      padding: 28px 36px;
+      text-align: left;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      margin-bottom: 36px;
       transition: all 1s ease;
-      margin-bottom: 26px;
+      box-shadow: 0 0 60px rgba(201, 168, 76, 0.04), inset 0 0 40px rgba(0, 0, 0, 0.5);
     }
 
     #mission-box.vis {
-      background: rgba(5, 2, 0, 0.85);
-      border: 1px solid rgba(201, 168, 76, 0.2);
+      box-shadow: 0 0 80px rgba(201, 168, 76, 0.08), inset 0 0 40px rgba(0, 0, 0, 0.5);
     }
 
     #mission-hdr {
       font-family: 'Playfair Display', serif;
-      font-size: 0.58rem;
-      letter-spacing: 5px;
+      font-size: 0.55rem;
+      letter-spacing: 6px;
       text-transform: uppercase;
       color: rgba(201, 168, 76, 0);
-      margin-bottom: 14px;
+      margin-bottom: 20px;
+      text-align: center;
       transition: color 1s ease 0.3s;
     }
 
     #mission-box.vis #mission-hdr {
-      color: rgba(201, 168, 76, 0.5);
+      color: rgba(201, 168, 76, 0.55);
     }
 
     .mi {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 11px;
-      text-align: left;
+      gap: 16px;
+      margin-bottom: 16px;
       opacity: 0;
-      transform: translateY(6px);
+      transform: translateY(8px);
       transition: all 0.7s ease;
     }
 
@@ -649,19 +743,27 @@
     }
 
     .mdot {
-      width: 5px;
-      height: 5px;
+      min-width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: #c9a84c;
-      margin-top: 7px;
+      border: 1px solid rgba(201, 168, 76, 0.5);
+      background: rgba(201, 168, 76, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.6rem;
+      color: rgba(201, 168, 76, 0.8);
       flex-shrink: 0;
-      box-shadow: 0 0 6px rgba(201, 168, 76, 0.7);
+      margin-top: 2px;
+      box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
     }
 
     .mtxt {
-      font-size: 0.78rem;
-      color: rgba(232, 213, 176, 0.68);
-      line-height: 1.7;
+      font-family: 'IM Fell English', serif;
+      font-size: 0.82rem;
+      color: rgba(232, 213, 176, 0.72);
+      line-height: 1.75;
       font-style: italic;
     }
 
@@ -669,27 +771,54 @@
       color: #c9a84c;
       font-style: normal;
       font-weight: normal;
+      font-family: 'Playfair Display', serif;
     }
 
     #enter-btn {
       opacity: 0;
       transform: translateY(10px);
-      background: transparent;
-      border: 1px solid rgba(201, 168, 76, 0.4);
-      color: rgba(201, 168, 76, 0.8);
-      padding: 14px 52px;
+      background: rgba(201, 168, 76, 0.04);
+      border: 1px solid rgba(201, 168, 76, 0.45);
+      color: rgba(201, 168, 76, 0.85);
+      padding: 16px 58px;
       font-family: 'Playfair Display', serif;
       font-size: 0.72rem;
-      letter-spacing: 5px;
+      letter-spacing: 6px;
       cursor: pointer;
       text-transform: uppercase;
       transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #enter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.2), transparent);
+      transform: skewX(-20deg);
+      left: -80%;
+      animation: btnShimmer 3.5s ease-in-out infinite;
+    }
+
+    @keyframes btnShimmer {
+      0% {
+        left: -80%;
+      }
+
+      100% {
+        left: 130%;
+      }
     }
 
     #enter-btn:hover {
-      border-color: #c9a84c;
+      border-color: rgba(201, 168, 76, 0.9);
       color: #c9a84c;
-      box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+      background: rgba(201, 168, 76, 0.08);
+      box-shadow: 0 0 50px rgba(201, 168, 76, 0.18), inset 0 0 20px rgba(201, 168, 76, 0.05);
+      letter-spacing: 8px;
     }
 
     #intro-skip {
@@ -936,8 +1065,11 @@
   <!-- INTRO -->
   <div id="intro">
 
+    <!-- particles.js ambient flame for intro screen -->
+    <div id="intro-particles" style="position:absolute;inset:0;pointer-events:none;z-index:0;"></div>
+
     <!-- NARRATOR STORY SCREEN — cinematic typewriter -->
-    <div id="narrator-screen">
+    <div id="narrator-screen" style="position:relative;z-index:1;">
       <div id="nline" class="nline"></div>
       <div id="ncursor" class="ncursor">|</div>
       <div id="ndivider" class="ndivider"></div>
@@ -945,34 +1077,67 @@
 
     <!-- TITLE CARD + MISSION -->
     <div id="intro-title-card">
-      <div id="itc-title">HAVELI</div>
-      <div id="itc-sub">Beneath the Surface · 1857–2024</div>
-      <div id="itc-hindi">हवेली · जो दफ़न है वो भूला नहीं</div>
 
-      <div id="mission-box">
-        <div id="mission-hdr">⸻ Your Mission ⸻</div>
-        <div class="mi" id="m1">
-          <div class="mdot"></div>
-          <div class="mtxt"><b>Walk the haveli.</b> Find the glowing spirits of your ancestors in every room.</div>
+      <!-- Particles for title card -->
+      <div id="itc-particles"></div>
+      <!-- Radial amber glow -->
+      <div id="itc-glow"></div>
+
+      <!-- All content sits above particles -->
+      <div id="itc-content">
+
+        <!-- Top ornament -->
+        <div class="itc-ornament">
+          <div class="itc-ornament-line"></div>
+          <span class="itc-ornament-gem">✦</span>
+          <div class="itc-ornament-line rev"></div>
         </div>
-        <div class="mi" id="m2">
-          <div class="mdot"></div>
-          <div class="mtxt"><b>Light the diyas. Ask questions.</b> Each ancestor hides a piece of the truth. Press E to
-            commune.</div>
+
+        <div id="itc-title">HAVELI</div>
+        <div id="itc-sub">Beneath the Surface &nbsp;·&nbsp; 1857–2024</div>
+        <div id="itc-hindi">हवेली &nbsp;·&nbsp; जो दफ़न है वो भूला नहीं</div>
+
+        <!-- Mission divider -->
+        <div class="itc-divider">
+          <div class="itc-divider-line"></div>
+          <div class="itc-divider-label">Your Mission</div>
+          <div class="itc-divider-line"></div>
         </div>
-        <div class="mi" id="m3">
-          <div class="mdot"></div>
-          <div class="mtxt"><b>Collect 8 pieces of evidence.</b> The betrayal letter. The hidden census entry. The
-            sealed blueprint. The child's anklet.</div>
+
+        <div id="mission-box">
+          <div id="mission-hdr">⸻ Four Truths to Uncover ⸻</div>
+          <div class="mi" id="m1">
+            <div class="mdot">I</div>
+            <div class="mtxt"><b>Walk the haveli.</b> Find the glowing spirits of your ancestors in every room.</div>
+          </div>
+          <div class="mi" id="m2">
+            <div class="mdot">II</div>
+            <div class="mtxt"><b>Light the diyas. Ask questions.</b> Each ancestor hides a piece of the truth. Press
+              <b>E</b> to commune.
+            </div>
+          </div>
+          <div class="mi" id="m3">
+            <div class="mdot">III</div>
+            <div class="mtxt"><b>Collect 8 pieces of evidence.</b> The betrayal letter. The hidden census entry. The
+              sealed blueprint. The child's anklet.</div>
+          </div>
+          <div class="mi" id="m4">
+            <div class="mdot">IV</div>
+            <div class="mtxt"><b>Unearth the full truth —</b> then find Hari Das's family in Ajmer. The debt is not
+              money. It is a name. <em>This happened. We know. We're sorry.</em></div>
+          </div>
         </div>
-        <div class="mi" id="m4">
-          <div class="mdot"></div>
-          <div class="mtxt"><b>Unearth the full truth — then find Hari Das's family in Ajmer.</b> The debt is not money.
-            It is a name. An acknowledgment. <em>This happened. We know. We're sorry.</em></div>
+
+        <button id="enter-btn" onclick="startGame()">Enter the Haveli</button>
+
+        <!-- Bottom ornament -->
+        <div class="itc-ornament" style="margin-top:28px;margin-bottom:0;">
+          <div class="itc-ornament-line"></div>
+          <span class="itc-ornament-gem" style="font-size:0.6rem;opacity:0.4;">✦</span>
+          <div class="itc-ornament-line rev"></div>
         </div>
+
       </div>
-
-      <button id="enter-btn" onclick="startGame()">Enter the Haveli</button>
     </div>
 
     <button id="intro-skip" onclick="skipToTitle()">SKIP INTRO</button>
@@ -980,11 +1145,12 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
     // ═══════════════════════════════════════════════════════════
     // GROQ AI — paste your key from https://console.groq.com/keys
     // ═══════════════════════════════════════════════════════════
-    const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE"; // ← replace this
+    const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
 
     const GROQ_SYSTEM_PROMPT = `You are a cinematic character dialogue engine designed for emotional voice synthesis.
 
@@ -1911,6 +2077,83 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
       return pickNoRepeat(`${key}:__fallback__`, bank.fallback);
     }
 
+    // ── Per-character TTS voices (Amazon Polly via StreamElements) ──
+    // Only voices confirmed working on StreamElements: Matthew, Justin, Joey,
+    // Brian, Kendra, Kimberly, Salli, Joanna, Ivy, Russell, Nicole
+    const CHAR_VOICES = {
+      ratan: { voice: 'Matthew', rate: 0.80, pitch: 0.85, female: false },
+      vikram: { voice: 'Joey', rate: 0.84, pitch: 0.94, female: false },
+      arjun: { voice: 'Justin', rate: 0.86, pitch: 0.92, female: false },
+      devraj: { voice: 'Brian', rate: 0.82, pitch: 0.91, female: false },
+      savitri: { voice: 'Kimberly', rate: 0.80, pitch: 1.05, female: true },
+      meera: { voice: 'Joanna', rate: 0.83, pitch: 1.05, female: true },
+      kamla: { voice: 'Ivy', rate: 0.78, pitch: 1.08, female: true },
+      priya: { voice: 'Salli', rate: 0.85, pitch: 1.05, female: true },
+    };
+
+    // Browser voice name keywords by gender — used in Web Speech fallback
+    const _femaleHints = ['samantha', 'karen', 'victoria', 'moira', 'fiona', 'tessa', 'veena', 'zira', 'hazel', 'female', 'woman', 'salli', 'joanna', 'kimberly', 'ivy', 'nicole', 'allison', 'ava', 'susan', 'kate'];
+    const _maleHints = ['daniel', 'alex', 'fred', 'tom', 'matthew', 'joey', 'justin', 'brian', 'russell', 'gordon', 'luca', 'male', 'man', 'jorge', 'juan'];
+
+    let _spiritAudio = null;
+
+    async function speakSpirit(charKey, text) {
+      // Stop any previous spirit voice
+      if (_spiritAudio) { _spiritAudio.pause(); _spiritAudio = null; }
+
+      const cfg = CHAR_VOICES[charKey] || { voice: 'Matthew', rate: 0.82, pitch: 0.90 };
+
+      // ── Try StreamElements (Amazon Polly) first ──────────────────
+      try {
+        const url = `https://api.streamelements.com/kappa/v2/speech?voice=${cfg.voice}&text=${encodeURIComponent(text)}`;
+        const response = await fetch(url);
+        if (response.ok) {
+          const blob = await response.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          _spiritAudio = new Audio(blobUrl);
+          // Simple playback — no Web Audio chain (avoids InvalidStateError)
+          _spiritAudio.volume = 1.0;
+          _spiritAudio.preservesPitch = false;
+          if (_spiritAudio.mozPreservesPitch !== undefined) _spiritAudio.mozPreservesPitch = false;
+          if (_spiritAudio.webkitPreservesPitch !== undefined) _spiritAudio.webkitPreservesPitch = false;
+          _spiritAudio.playbackRate = cfg.rate;
+          await _spiritAudio.play();
+          return;
+        }
+      } catch (e) { /* fall through */ }
+
+      // ── Fallback: Web Speech API with correct gender ──────────────
+      try {
+        window.speechSynthesis.cancel();
+
+        // Voices may not be loaded yet — wait up to 1s
+        let voices = window.speechSynthesis.getVoices();
+        if (!voices.length) {
+          await new Promise(res => {
+            window.speechSynthesis.onvoiceschanged = res;
+            setTimeout(res, 1000);
+          });
+          voices = window.speechSynthesis.getVoices();
+        }
+
+        const hints = cfg.female ? _femaleHints : _maleHints;
+        const engVoices = voices.filter(v => v.lang.startsWith('en'));
+        // Pick a voice whose name contains a gender hint
+        let picked = engVoices.find(v => hints.some(h => v.name.toLowerCase().includes(h)));
+        // Final fallback: just any English voice
+        if (!picked) picked = engVoices[0];
+
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.rate = cfg.rate * 1.1;
+        utt.pitch = cfg.pitch;
+        utt.volume = 1.0;
+        if (picked) utt.voice = picked;
+        window.speechSynthesis.speak(utt);
+      } catch (err) {
+        console.warn('Spirit TTS fallback failed:', err);
+      }
+    }
+
     async function askSpirit() {
       const key = gameState.activeChar;
       if (!key) return;
@@ -2197,34 +2440,46 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
         _audioSource = null;
       }
 
-      // Use StreamElements TTS API (Amazon Polly "Matthew") for a deep, emotional male voice
-      const url = `https://api.streamelements.com/kappa/v2/speech?voice=Matthew&text=${encodeURIComponent(text)}`;
+      // Use StreamElements TTS (Amazon Polly "Brian") — deep emotional UK male voice
+      const url = `https://api.streamelements.com/kappa/v2/speech?voice=Brian&text=${encodeURIComponent(text)}`;
 
       try {
         const response = await fetch(url);
+        if (!response.ok) throw new Error('TTS fetch failed');
         const blob = await response.blob();
         if (myToken !== _speechToken) return;
 
         const blobUrl = URL.createObjectURL(blob);
         _currentAudio = new Audio(blobUrl);
 
-        // Lower pitch naturally
+        // Slower playback for gravitas
         _currentAudio.preservesPitch = false;
         if (_currentAudio.mozPreservesPitch !== undefined) _currentAudio.mozPreservesPitch = false;
         if (_currentAudio.webkitPreservesPitch !== undefined) _currentAudio.webkitPreservesPitch = false;
-        _currentAudio.playbackRate = 0.82; // Slower, deeper
+        _currentAudio.playbackRate = 0.78; // Extra slow & deep
 
         initAudioContext();
-
-        // Wait for MediaElement to be somewhat ready to prevent state issues before connecting
         _audioSource = _audioContext.createMediaElementSource(_currentAudio);
 
-        // --- EMOTIONAL DEEP TONE WEB AUDIO PROCESSING ---
-        // 1. Bass Boost for deep resonant tone
+        // ── EMOTIONAL DEEP VOICE CHAIN ─────────────────────────────
+        // 1. Treble cut — remove harshness, add warmth
+        const trebleCut = _audioContext.createBiquadFilter();
+        trebleCut.type = 'highshelf';
+        trebleCut.frequency.value = 5000;
+        trebleCut.gain.value = -8;
+
+        // 2. Mid warmth — boost 300–800Hz for body
+        const midWarm = _audioContext.createBiquadFilter();
+        midWarm.type = 'peaking';
+        midWarm.frequency.value = 500;
+        midWarm.Q.value = 0.8;
+        midWarm.gain.value = 6;
+
+        // 3. Bass Boost — deep resonant foundation
         const bassNode = _audioContext.createBiquadFilter();
         bassNode.type = 'lowshelf';
-        bassNode.frequency.value = 250;
-        bassNode.gain.value = 16; // Significant bass boost
+        bassNode.frequency.value = 220;
+        bassNode.gain.value = 18;
 
         // 2. Dynamics Compressor setup to bring out emotional whispers and limit the booming bass
         const compressor = _audioContext.createDynamicsCompressor();
@@ -2234,27 +2489,27 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
         compressor.attack.value = 0.01;
         compressor.release.value = 0.25;
 
-        // 3. Subtle delay/reverb for haunting thickness
+
+        // 4. Delay/reverb for haunting thickness
         const delayNode = _audioContext.createDelay();
-        delayNode.delayTime.value = 0.05; // 50ms reflection
+        delayNode.delayTime.value = 0.06;
         const delayGain = _audioContext.createGain();
-        delayGain.gain.value = 0.35; // wet mix
+        delayGain.gain.value = 0.45; // richer wet mix
 
-        // Master volume for narrator to sit well
+        // Master gain
         const masterGain = _audioContext.createGain();
-        masterGain.gain.value = 1.3;
+        masterGain.gain.value = 1.4;
 
-        // Routing
-        _audioSource.connect(bassNode);
+        // Routing: source → trebleCut → midWarm → bass → compressor → master → out
+        //                                                 compressor → delay → master
+        _audioSource.connect(trebleCut);
+        trebleCut.connect(midWarm);
+        midWarm.connect(bassNode);
         bassNode.connect(compressor);
-
         compressor.connect(masterGain);
-
-        // Delay send
         compressor.connect(delayNode);
         delayNode.connect(delayGain);
         delayGain.connect(masterGain);
-
         masterGain.connect(_audioContext.destination);
 
         // Word bounds
@@ -2341,6 +2596,10 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
     function runIntro() {
       _narratorBeat = 0;
       document.getElementById('ncursor').style.display = 'inline-block';
+
+      // Init flame particles on narrator screen
+      initFlameParticles('intro-particles', 55);
+
       playNextBeat();
     }
 
@@ -2357,6 +2616,8 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
           setTimeout(() => {
             document.getElementById('intro-title-card').classList.add('vis');
             document.getElementById('mission-box').classList.add('vis');
+            // Init flame particles on title card
+            initFlameParticles('itc-particles', 70);
             let delay = 400;
             ['m1', 'm2', 'm3', 'm4'].forEach(id => {
               setTimeout(() => document.getElementById(id).classList.add('vis'), delay);
@@ -2421,6 +2682,46 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
       }, beat.pause > 0 ? 600 : 400); // short fade gap
     }
 
+    // ── Shared flame particles initializer ───────────────────────────
+    const _particlesInited = new Set();
+    function initFlameParticles(containerId, count) {
+      if (!window.particlesJS) return;
+      const el = document.getElementById(containerId);
+      if (!el || _particlesInited.has(containerId)) return;
+      _particlesInited.add(containerId);
+      particlesJS(containerId, {
+        particles: {
+          number: { value: count || 70, density: { enable: true, value_area: 900 } },
+          color: { value: ['#ff6600', '#ff4400', '#ffaa00', '#ffcc44', '#cc3300', '#ff8800', '#ffe066'] },
+          shape: { type: 'circle' },
+          opacity: {
+            value: 0.65,
+            random: true,
+            anim: { enable: true, speed: 1.8, opacity_min: 0.05, sync: false }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: { enable: true, speed: 2, size_min: 0.3, sync: false }
+          },
+          line_linked: { enable: false },
+          move: {
+            enable: true,
+            speed: 1.5,
+            direction: 'top',
+            random: true,
+            straight: false,
+            out_mode: 'out',
+            bounce: false
+          }
+        },
+        interactivity: {
+          events: { onhover: { enable: false }, onclick: { enable: false }, resize: true }
+        },
+        retina_detect: true
+      });
+    }
+
     function skipToTitle() {
       // 🚨 CRITICAL FIX: Fully disconnect the event handlers so `playNextBeat` cannot trigger
       window._currentAudioOnEnd = null;
@@ -2446,6 +2747,7 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
       setTimeout(() => {
         document.getElementById('intro-title-card').classList.add('vis');
         document.getElementById('mission-box').classList.add('vis');
+        initFlameParticles('itc-particles', 70);
         ['m1', 'm2', 'm3', 'm4'].forEach((id, i) => {
           setTimeout(() => document.getElementById(id).classList.add('vis'), i * 200);
         });
@@ -2550,13 +2852,163 @@ You are ${char.name} (${char.era}). ${char.prompt}`;
 
     const startOverlay = document.createElement('div');
     startOverlay.id = 'start-overlay';
-    startOverlay.style.cssText = "position:fixed;inset:0;background:#000;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#c9a84c;cursor:pointer;transition:opacity 1s;";
+    startOverlay.style.cssText = "position:fixed;inset:0;background:#000;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#c9a84c;cursor:pointer;transition:opacity 1.2s;overflow:hidden;";
     startOverlay.innerHTML = `
-      <div style="font-family:'Playfair Display',serif;font-size:3.8rem;letter-spacing:14px;margin-bottom:8px;text-shadow:0 0 60px rgba(201,168,76,0.7);animation:tBreathe 3s ease-in-out infinite;">HAVELI</div>
-      <div style="font-family:'IM Fell English',serif;font-size:0.62rem;letter-spacing:7px;color:rgba(201,168,76,0.4);text-transform:uppercase;margin-bottom:60px;">Beneath the Surface</div>
-      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;letter-spacing:6px;animation:curBlink 1.5s infinite;">CLICK TO BEGIN</div>
+      <!-- particles.js flame container -->
+      <div id="particles-js" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></div>
+
+      <!-- Background radial glow -->
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 50% 50%, rgba(139,69,19,0.22) 0%, rgba(201,168,76,0.07) 40%, transparent 70%);pointer-events:none;animation:soGlow 4s ease-in-out infinite alternate;z-index:1;"></div>
+
+      <!-- Content wrapper -->
+      <div style="position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0;">
+
+        <!-- Top ornament -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px;opacity:0.55;">
+          <div style="width:60px;height:1px;background:linear-gradient(to right,transparent,#c9a84c);"></div>
+          <span style="font-size:1.1rem;color:#c9a84c;">✦</span>
+          <div style="width:60px;height:1px;background:linear-gradient(to left,transparent,#c9a84c);"></div>
+        </div>
+
+        <!-- Hindi subtitle -->
+        <div style="font-family:'Noto Serif Devanagari',serif;font-size:0.78rem;letter-spacing:5px;color:rgba(201,168,76,0.35);margin-bottom:14px;">हवेली</div>
+
+        <!-- Main title -->
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,5.5rem);letter-spacing:18px;margin-bottom:10px;text-shadow:0 0 80px rgba(201,168,76,0.9),0 0 160px rgba(201,168,76,0.3);animation:soTitlePulse 3.5s ease-in-out infinite;font-weight:700;">HAVELI</div>
+
+        <!-- Subtitle -->
+        <div style="font-family:'IM Fell English',serif;font-size:0.7rem;letter-spacing:8px;color:rgba(201,168,76,0.45);text-transform:uppercase;margin-bottom:32px;font-style:italic;">Beneath the Surface</div>
+
+        <!-- Ornamental divider with diya flames -->
+        <div style="display:flex;align-items:center;gap:18px;margin-bottom:44px;">
+          <div style="width:90px;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,0.5));"></div>
+          <div class="so-diya"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:#c9a84c;box-shadow:0 0 12px rgba(201,168,76,0.9);"></div>
+          <div class="so-diya"></div>
+          <div style="width:90px;height:1px;background:linear-gradient(to left,transparent,rgba(201,168,76,0.5));"></div>
+        </div>
+
+        <!-- CTA Button -->
+        <div id="so-btn" style="
+          border:1px solid rgba(201,168,76,0.5);
+          padding:16px 56px;
+          font-family:'Playfair Display',serif;
+          font-size:0.75rem;
+          letter-spacing:6px;
+          text-transform:uppercase;
+          color:rgba(201,168,76,0.85);
+          position:relative;
+          overflow:hidden;
+          transition:all 0.4s;
+          background:rgba(201,168,76,0.04);
+          animation:soFadeUp 2s ease 0.5s both;
+        ">
+          <span style="position:relative;z-index:1;">Enter the Haveli</span>
+          <div class="so-shimmer"></div>
+        </div>
+
+        <!-- Bottom hint -->
+        <div style="margin-top:22px;font-size:0.58rem;letter-spacing:3px;color:rgba(201,168,76,0.2);text-transform:uppercase;animation:soFadeUp 2s ease 1.2s both;">
+          Click anywhere to continue
+        </div>
+      </div>
+
+      <style>
+        @keyframes soGlow {
+          0%   { opacity: 0.5; transform: scale(1); }
+          100% { opacity: 1;   transform: scale(1.08); }
+        }
+        @keyframes soTitlePulse {
+          0%,100% { text-shadow: 0 0 60px rgba(201,168,76,0.7), 0 0 120px rgba(201,168,76,0.2); }
+          50%      { text-shadow: 0 0 120px rgba(201,168,76,1),  0 0 240px rgba(201,168,76,0.5), 0 0 400px rgba(201,168,76,0.15); }
+        }
+        @keyframes soFadeUp {
+          from { opacity:0; transform:translateY(16px); }
+          to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes diyaFlame {
+          0%   { transform:translateX(-50%) scaleY(1)   scaleX(1); }
+          33%  { transform:translateX(-58%) scaleY(1.4) scaleX(0.75); }
+          66%  { transform:translateX(-42%) scaleY(0.9) scaleX(1.1); }
+          100% { transform:translateX(-50%) scaleY(1.15) scaleX(0.9); }
+        }
+        @keyframes soShimmer {
+          0%   { left:-80%; }
+          100% { left:120%; }
+        }
+        .so-diya {
+          width:10px; height:10px;
+          border-radius:50% 50% 40% 40%;
+          background:radial-gradient(circle at 40% 40%, #ffdd55, #ff8800);
+          box-shadow:0 0 10px rgba(255,160,0,0.8);
+          position:relative;
+        }
+        .so-diya::before {
+          content:'';
+          position:absolute;
+          top:-9px; left:50%;
+          transform:translateX(-50%);
+          width:3px; height:11px;
+          background:linear-gradient(#ffee88,#ff8800);
+          border-radius:50% 50% 0 0;
+          box-shadow:0 0 6px rgba(255,220,0,0.9);
+          animation:diyaFlame 1.1s ease-in-out infinite alternate;
+        }
+        .so-shimmer {
+          position:absolute;
+          top:0; bottom:0;
+          width:60px;
+          background:linear-gradient(90deg,transparent,rgba(201,168,76,0.25),transparent);
+          transform:skewX(-20deg);
+          animation:soShimmer 3s ease-in-out infinite;
+        }
+        #so-btn:hover {
+          border-color:rgba(201,168,76,0.9);
+          color:#c9a84c;
+          background:rgba(201,168,76,0.08);
+          box-shadow:0 0 40px rgba(201,168,76,0.18), inset 0 0 20px rgba(201,168,76,0.05);
+          letter-spacing:8px;
+        }
+      </style>
     `;
     document.body.appendChild(startOverlay);
+
+    // ── Particles.js flame config ─────────────────────────────────
+    if (window.particlesJS) {
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 900 } },
+          color: { value: ['#ff6600', '#ffaa00', '#ffdd44', '#ff3300', '#ffcc00', '#ff8800', '#ffe066'] },
+          shape: { type: 'circle' },
+          opacity: {
+            value: 0.7,
+            random: true,
+            anim: { enable: true, speed: 1.5, opacity_min: 0.05, sync: false }
+          },
+          size: {
+            value: 3,
+            random: true,
+            anim: { enable: true, speed: 2, size_min: 0.3, sync: false }
+          },
+          line_linked: { enable: false },
+          move: {
+            enable: true,
+            speed: 1.8,
+            direction: 'top',          // particles rise upward
+            random: true,
+            straight: false,
+            out_mode: 'out',
+            bounce: false,
+            attract: { enable: false }
+          }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: { onhover: { enable: false }, onclick: { enable: false }, resize: true }
+        },
+        retina_detect: true
+      });
+    }
 
     startOverlay.addEventListener('click', () => {
       // Wake up audio context on user interaction

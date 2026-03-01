@@ -982,6 +982,39 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     // ═══════════════════════════════════════════════════════════
+    // GROQ AI — paste your key from https://console.groq.com/keys
+    // ═══════════════════════════════════════════════════════════
+    const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE"; // ← replace this
+
+    const GROQ_SYSTEM_PROMPT = `You are a cinematic character dialogue engine designed for emotional voice synthesis.
+
+Your job:
+- Every character must reply in a way suitable for voice acting.
+- Maintain consistent personality and gender tone.
+- Express clear emotional states.
+- Keep dialogue immersive and natural.
+- Do NOT explain anything.
+- Do NOT narrate mechanics.
+- Stay fully in character.
+
+Output format MUST be exactly:
+[Character Name]
+[Gender: Male/Female/Other]
+[Emotion: Calm / Angry / Sad / Excited / Whispering / Confident / Afraid / Sarcastic / Breaking]
+[Voice Direction: deep / soft / shaky / commanding / cold / playful / slow / fast]
+"Dialogue here."
+
+Rules:
+- Emotion must match the scene context.
+- Voice Direction must match gender and personality.
+- Keep sentences natural for speech.
+- Avoid long paragraphs.
+- Maximum 3–4 lines of dialogue.
+- Increase emotional intensity during tense moments.
+- Never break format.
+- Stay immersive.`;
+
+    // ═══════════════════════════════════════════════════════════
     // CHARACTERS — Indian Family (Chaudhary Haveli, Rajasthan)
     // ═══════════════════════════════════════════════════════════
     const CHARS = {
@@ -1814,28 +1847,68 @@
       return pool[_responseQueues[poolKey].pop()];
     }
 
+    // ── GROQ API call ────────────────────────────────────────────
+    async function callGroqAPI(characterKey, question) {
+      const char = CHARS[characterKey];
+      if (!char) return null;
+
+      const userMessage = `The player asks the spirit: "${question}"
+
+You are ${char.name} (${char.era}). ${char.prompt}`;
+
+      const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: GROQ_SYSTEM_PROMPT },
+            { role: 'user', content: userMessage }
+          ],
+          max_tokens: 220,
+          temperature: 0.85
+        })
+      });
+
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      const raw = data?.choices?.[0]?.message?.content || null;
+      if (!raw) return null;
+
+      // Extract the quoted dialogue line(s)
+      const matches = [...raw.matchAll(/"([^"]+)"/g)];
+      if (matches.length) return matches.map(m => m[1]).join(' ');
+
+      // If no quotes found, strip the header lines and return the last non-empty line
+      const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+      return lines[lines.length - 1] || null;
+    }
+
     async function generateCharacterResponse(characterKey, question) {
-      // Small simulated delay for atmosphere
-      await new Promise(r => setTimeout(r, 700 + Math.random() * 600));
-
-      const key = gameState.activeChar;
-      const bank = SPIRIT_RESPONSES[key];
-      if (!bank) return "The spirit does not answer.";
-
-      const q = question.toLowerCase();
-
-      // Find first matching keyword group, then pick a non-repeating response
-      for (const [pattern, responses] of Object.entries(bank.keywords)) {
-        const regex = new RegExp(pattern, 'i');
-        if (regex.test(q)) {
-          const poolKey = `${key}:${pattern}`;
-          return pickNoRepeat(poolKey, responses);
+      // Try live Groq API first
+      if (GROQ_API_KEY && GROQ_API_KEY !== 'YOUR_GROQ_API_KEY_HERE') {
+        try {
+          const aiReply = await callGroqAPI(characterKey, question);
+          if (aiReply) return aiReply;
+        } catch (err) {
+          // silently fall through to keyword engine
         }
       }
 
-      // Fallback — also no-repeat
-      const fbKey = `${key}:__fallback__`;
-      return pickNoRepeat(fbKey, bank.fallback);
+      // ── Keyword fallback (no-repeat) ─────────────────────────
+      await new Promise(r => setTimeout(r, 700 + Math.random() * 600));
+      const key = gameState.activeChar;
+      const bank = SPIRIT_RESPONSES[key];
+      if (!bank) return "The spirit does not answer.";
+      const q = question.toLowerCase();
+      for (const [pattern, responses] of Object.entries(bank.keywords)) {
+        const regex = new RegExp(pattern, 'i');
+        if (regex.test(q)) return pickNoRepeat(`${key}:${pattern}`, responses);
+      }
+      return pickNoRepeat(`${key}:__fallback__`, bank.fallback);
     }
 
     async function askSpirit() {
